@@ -5,23 +5,34 @@ import './index.less'
 export default class Index extends Component {
 
   config = {
-    navigationBarTitleText: '首页'
+    enablePullDownRefresh: true
   }
 
-  componentWillMount () { }
+  componentWillMount() { }
 
-  componentDidMount () { }
+  componentDidMount() { }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
+  componentDidHide() { }
+  
+  onPullDownRefresh(){
+      console.log('添加页面')
+      Taro.navigateTo({
+        url: '../add/add'
+      })
+      Taro.stopPullDownRefresh()
+  }
 
-  render () {
+  render() {
     return (
       <View className='index'>
-        <Text>Hello world!</Text>
+        <View className='item__none'>
+          <Text>元气满满新的一天！</Text>
+          <Text>写下新的待办事吧 ！</Text>
+        </View>
       </View>
     )
   }

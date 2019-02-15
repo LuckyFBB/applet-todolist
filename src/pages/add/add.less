@@ -1,0 +1,36 @@
+.add{
+  padding: 20rpx 30rpx 0;
+  &__form{
+    display: flex;
+    flex-direction: column;
+    .form{
+      &__item{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 30rpx;
+        font-size: 32rpx;
+        border-radius: 10rpx;
+        background-color: rgb(236,237,232);
+        &:last-child{
+          margin-bottom: 0;
+        }
+        &--detail{
+          height: 240rpx;
+        }
+        .item{
+          &__input{
+            box-sizing: border-box;
+            padding: 20rpx 0 20rpx 10rpx;
+            height: 100%;
+            width: 100%;
+          }
+        }
+      }
+      &__button{
+        width: 60vw;
+        background-color: #5F9EA0;
+        color: #fff;
+      }
+    }
+  }
+}
