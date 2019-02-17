@@ -1,4 +1,7 @@
-.item{
+.todo{
+  display: flex;
+  flex-direction: column;
+  color: #5F9EA0;
   &__none{
     text-align: center;
     text{
@@ -6,6 +9,27 @@
       height: 80rpx;
       line-height: 80rpx;
       font-size: 36rpx;
+    }
+  }
+  &__item{
+    display: flex;
+    flex-direction: row;
+    height: 100rpx;
+    margin-top: 20rpx;
+    line-height: 100rpx;
+    font-size: 28rpx;
+    background-color: #F0F0F0;
+    &:first-child{
+      margin-top: 0;
+    }
+    .item{
+      &__name{
+        width: 200rpx;
+        text-align: center;
+      }
+      &__detail{
+        flex: 1;
+      }
     }
   }
 }
