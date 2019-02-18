@@ -11,6 +11,10 @@ export default class Index extends Component {
   }
 
   componentWillMount() {
+    Taro.showLoading({
+      title: '加载中',
+      mask: true
+    })
     let _this = this
     Taro.getUserInfo({
       success(res) {
@@ -18,6 +22,7 @@ export default class Index extends Component {
         _this.setState({
           userInfo
         })
+        Taro.hideLoading()
       }
     })
   }

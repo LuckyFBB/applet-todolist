@@ -18,7 +18,16 @@ export default class Index extends Component {
       todos.push(todo)
       Taro.setStorage({
         key: 'todos',
-        data: todos
+        data: todos,
+        success() {
+          Taro.showToast({
+            title: '添加成功',
+            icon: 'success'
+          })
+          Taro.navigateBack({
+            delta: 1
+          })
+        }
       })
     } else {
       Taro.getStorage({
@@ -31,12 +40,12 @@ export default class Index extends Component {
             key: 'todos',
             data: todos,
             success() {
-              Taro.navigateBack({
-                delta: 1
-              })
               Taro.showToast({
                 title: '添加成功',
                 icon: 'success'
+              })
+              Taro.navigateBack({
+                delta: 1
               })
             }
           })

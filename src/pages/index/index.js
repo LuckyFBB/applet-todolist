@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Button } from '@tarojs/components'
+import down from '../../images/down.png'
 import './index.less'
 
 export default class Index extends Component {
@@ -38,6 +39,10 @@ export default class Index extends Component {
   }
 
   handleGetStorage = () => {
+    Taro.showLoading({
+      title: '加载中',
+      mask: true
+    })
     const _this = this
     if (Taro.getStorageSync('todos')) {
       Taro.getStorage({
@@ -50,8 +55,12 @@ export default class Index extends Component {
         }
       })
     }
+    Taro.hideLoading()
   }
 
+  handleDown = (id) => {
+    console.log(id)
+  }
   render() {
     const { todos } = this.state
     return (
@@ -63,11 +72,19 @@ export default class Index extends Component {
               <Text>下拉创建新的待办事吧！</Text>
             </View>
           ) : (
-              todos.map(item => {
+              todos.map((item, index) => {
                 return (
-                  <View className='todo__item' key={item.id}>
-                    <Text className='item__name'>{item.name}</Text>
-                    <Text className='item__detail'>{item.detail}</Text>
+                  <View className='todo__item'  key={item.id} onClick={this.handleDown.bind(this, item.id)}>
+                    <View className='item__info'>
+                      <Text className='info__name'>{`${index + 1}.   ${item.name}`}</Text>
+                      <View className='info__img'>
+                        <Image src={down} />
+                      </View>
+                    </View>
+                    <View className='item__action'>
+                      <Text className='action--success'>完成</Text>
+                      <Text className='action--delete'>删除</Text>
+                    </View>
                   </View>
                 )
               })

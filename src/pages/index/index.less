@@ -1,6 +1,7 @@
 .todo{
   display: flex;
   flex-direction: column;
+  padding: 10rpx 20rpx 20rpx;
   color: #5F9EA0;
   &__none{
     text-align: center;
@@ -13,22 +14,64 @@
   }
   &__item{
     display: flex;
-    flex-direction: row;
-    height: 100rpx;
-    margin-top: 20rpx;
-    line-height: 100rpx;
-    font-size: 28rpx;
-    background-color: #F0F0F0;
-    &:first-child{
-      margin-top: 0;
-    }
+    flex-direction: column;
+    margin-bottom: 20rpx;
     .item{
-      &__name{
-        width: 200rpx;
-        text-align: center;
+      &__info{
+        display: flex;
+        justify-content: space-between;
+        height: 100rpx;
+        margin-top: 20rpx;
+        line-height: 100rpx;
+        font-size: 28rpx;
+        border-radius: 10rpx;
+        background-color: #F0F0F0;
+        &:first-child{
+          margin-top: 0rpx;
+        }
+        .info{
+          &__name{
+            width: 200rpx;
+            padding-left: 20rpx;
+          }
+          &__img{
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding-right: 20rpx;
+            image{
+              width: 50rpx;
+              height: 50rpx;
+            }
+          }
+        }
       }
-      &__detail{
-        flex: 1;
+      &__action{
+        display: flex;
+        justify-content: flex-start;
+        padding: 20rpx 0;
+        border-radius: 10rpx;
+        background-color: #FAFAFA;
+        text{
+          height: 50rpx;
+          width: 100rpx;
+          padding: 0;
+          margin: 0 20rpx;
+          line-height: 50rpx;
+          font-size: 28rpx;
+          text-align: center;
+          border-radius: 10rpx;
+        }
+        .action{
+          &--success{
+            color: #FFC125;
+            border: 2px solid #FFC125;
+          }
+          &--delete{
+            color: #FF3030;
+            border: 2px solid #FF3030;
+          }
+        }
       }
     }
   }
