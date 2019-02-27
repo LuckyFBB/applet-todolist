@@ -18,6 +18,9 @@ export default class Index extends Component {
 
   componentWillMount() {
     this.handleGetStorage()
+    if (this.state.todos) {
+      this.initTodos()
+    }
   }
 
   componentDidMount() { }
@@ -26,6 +29,9 @@ export default class Index extends Component {
 
   componentDidShow() {
     this.handleGetStorage()
+    if (this.state.todos) {
+      this.initTodos()
+    }
   }
 
   componentDidHide() { }
@@ -38,6 +44,7 @@ export default class Index extends Component {
     Taro.stopPullDownRefresh()
   }
 
+  //获取todo列表
   handleGetStorage = () => {
     Taro.showLoading({
       title: '加载中',
@@ -58,15 +65,57 @@ export default class Index extends Component {
     Taro.hideLoading()
   }
 
+  //初始化数据是否展示
+  initTodos = () => {
+    let todos = this.state.todos
+    for (let i = 0; i < todos.length; i++) {
+      todos[i].show = false
+    }
+    this.setState({
+      todos
+    })
+  }
+
   handleDown = (id) => {
+    let todos = this.state.todos
+    todos.forEach(item => {
+      if (item.id === id) {
+        item.show = !item.show
+      }
+    })
+    this.setState({
+      todos
+    })
+  }
+
+  handleDelete = (id, e) => {
+    e.stopPropagation()
+    let todos = this.state.todos
+    todos = todos.filter(item => item.id !== id)
+    Taro.setStorage({
+      key: 'todos',
+      data: todos,
+      success() {
+        Taro.showToast({
+          title: '删除成功',
+          icon: 'success',
+          duration: 3000
+        })
+      }
+    })
+    this.handleGetStorage()
+  }
+
+  handleTouch = (id) => {
     console.log(id)
   }
+
   render() {
     const { todos } = this.state
     return (
       <View className='todo'>
         {
-          todos === null ? (
+          (todos === null || todos.length === 0) ? (
             <View className='todo__none'>
               <Text>元气满满新的一天！</Text>
               <Text>下拉创建新的待办事吧！</Text>
@@ -74,17 +123,21 @@ export default class Index extends Component {
           ) : (
               todos.map((item, index) => {
                 return (
-                  <View className='todo__item'  key={item.id} onClick={this.handleDown.bind(this, item.id)}>
-                    <View className='item__info'>
+                  <View className='todo__item' key={item.id} onTouchMove={this.handleTouch.bind(this, item.id)}>
+                    <View className='item__info' onClick={this.handleDown.bind(this, item.id)}>
                       <Text className='info__name'>{`${index + 1}.   ${item.name}`}</Text>
                       <View className='info__img'>
                         <Image src={down} />
                       </View>
                     </View>
-                    <View className='item__action'>
-                      <Text className='action--success'>完成</Text>
-                      <Text className='action--delete'>删除</Text>
-                    </View>
+                    {
+                      item.show ? (
+                        <View className='item__action'>
+                          <Text className='action--success'>完成</Text>
+                          <Text className='action--delete' onClick={this.handleDelete.bind(this, item.id)}>删除</Text>
+                        </View>
+                      ) : null
+                    }
                   </View>
                 )
               })
